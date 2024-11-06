@@ -21,6 +21,7 @@ rustPlatform.buildRustPackage {
   meta = {
     description = "Rerun external mesh loader for collada files";
     homepage = "https://github.com/gepetto/rerun-loader-collada";
+    changelog = "https://github.com/gepetto/rerun-loader-collada/blob/main/CHANGELOG.md";
     license = with lib.licenses; [
       asl20
       mit
