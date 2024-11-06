@@ -2,6 +2,9 @@
 name = "rerun-loader-collada"
 version = "0.1.0"
 edition = "2021"
+description = "Rerun external mesh loader for collada files"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/gepetto/rerun-loader-collada"
 
 [dependencies]
 anyhow = "1.0.93"
