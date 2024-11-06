@@ -14,10 +14,14 @@
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       systems = inputs.nixpkgs.lib.systems.flakeExposed;
       perSystem =
-        { pkgs, self', ...  }:
+        { pkgs, self', ... }:
         {
           devShells.default = pkgs.mkShell {
-            packages = [ pkgs.clippy pkgs.rustfmt ];
+            packages = [
+              pkgs.cargo-release
+              pkgs.clippy
+              pkgs.rustfmt
+            ];
             inputsFrom = [ self'.packages.default ];
           };
           packages = {
