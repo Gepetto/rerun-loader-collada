@@ -29,5 +29,5 @@ jobs:
       - uses: actions/checkout@v4
       - uses: taiki-e/upload-rust-binary-action@v1
         with:
-          bin: pre-commit-sort
+          bin: rerun-loader-collada
           token: ${{ secrets.GITHUB_TOKEN }}
