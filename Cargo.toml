@@ -4,3 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+anyhow = "1.0.93"
+argh = "0.1.12"
+mesh-loader = "0.1.13"
+rerun = "0.19.1"
