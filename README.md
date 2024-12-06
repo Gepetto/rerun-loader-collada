@@ -32,3 +32,8 @@ Any executable on your `$PATH` with a name that starts with [`rerun-loader-`] wi
 This particular one will log Rust source code files as markdown documents, and return a special exit code to indicate that it doesn't support anything else.
 
 See: https://rerun.io/docs/reference/data-loaders/overview
+
+## Temporary fix
+This version of the package overcomes issue https://github.com/rerun-io/rerun/issues/8191.
+In the currect version of rerun, external data loaders lack parameters opened_recording_id and opened_application_id.
+Once the above issue is fixed, this fix (commit) should be reverted.
