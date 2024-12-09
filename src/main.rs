@@ -52,11 +52,6 @@ fn load_mesh(rec: &rerun::RecordingStream, args: &Args) -> anyhow::Result<()> {
     let loader = mesh_loader::Loader::default();
     let scene = loader.load_collada(&args.filepath)?;
 
-    let entity_path_prefix = args.entity_path_prefix.as_ref().map_or_else(
-        || rerun::EntityPath::new(vec![]),
-        |prefix| rerun::EntityPath::from(prefix.clone()),
-    );
-
     for (mesh, mat) in scene.meshes.iter().zip(scene.materials.iter()) {
         let mut mesh3d = rerun::Mesh3D::new(&mesh.vertices);
 
@@ -73,21 +68,12 @@ fn load_mesh(rec: &rerun::RecordingStream, args: &Args) -> anyhow::Result<()> {
             ));
         }
 
-        let filename = args.filepath.file_stem().and_then(|f| f.to_str());
+        let entity_path = args.entity_path_prefix.as_deref().map_or_else(
+            || rerun::EntityPath::from_file_path(&args.filepath),
+            rerun::EntityPath::from,
+        );
 
-        if let Some(filename) = filename {
-            let path = std::path::Path::new(&filename);
-
-            rec.log(
-                rerun::EntityPath::from_single_string(path.to_string_lossy().to_string()),
-                &mesh3d,
-            )?;
-        } else {
-            rec.log(
-                entity_path_prefix.join(&rerun::EntityPath::from_file_path(&args.filepath)),
-                &mesh3d,
-            )?;
-        }
+        rec.log(entity_path, &mesh3d)?;
     }
 
     Ok::<_, anyhow::Error>(())
