@@ -68,6 +68,8 @@ fn load_mesh(rec: &rerun::RecordingStream, args: &Args) -> anyhow::Result<()> {
             ));
         }
 
+        // If specified, entity_path_prefix will be the entity_path of the mesh.
+        // In other cases, it will be its file path.
         let entity_path = args.entity_path_prefix.as_deref().map_or_else(
             || rerun::EntityPath::from_file_path(&args.filepath),
             rerun::EntityPath::from,
