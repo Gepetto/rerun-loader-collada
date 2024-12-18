@@ -51,6 +51,7 @@ fn extension(path: &std::path::Path) -> String {
 fn load_mesh(rec: &rerun::RecordingStream, args: &Args) -> anyhow::Result<()> {
     let loader = mesh_loader::Loader::default();
     let scene = loader.load_collada(&args.filepath)?;
+    let mut cpt = 0;
 
     for (mesh, mat) in scene.meshes.iter().zip(scene.materials.iter()) {
         let mut mesh3d = rerun::Mesh3D::new(&mesh.vertices);
@@ -68,6 +69,13 @@ fn load_mesh(rec: &rerun::RecordingStream, args: &Args) -> anyhow::Result<()> {
             ));
         }
 
+        // Ensure that entity_path won't overwrite another Rerun node
+        let mesh_name = if mesh.name.is_empty() {
+            &format!("no_mesh_name_{cpt}")
+        } else {
+            &mesh.name
+        };
+
         // If specified, entity_path_prefix will be the entity_path of the mesh.
         // In other cases, it will be its file path.
         let entity_path = args
@@ -78,9 +86,10 @@ fn load_mesh(rec: &rerun::RecordingStream, args: &Args) -> anyhow::Result<()> {
                 rerun::EntityPath::from,
             )
             .join(&EntityPath::from("/"))
-            .join(&EntityPath::from(mesh.name.as_str()));
+            .join(&EntityPath::from(mesh_name.as_str()));
 
         rec.log(entity_path, &mesh3d)?;
+        cpt += 1;
     }
 
     Ok::<_, anyhow::Error>(())
