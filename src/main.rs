@@ -66,10 +66,10 @@ fn load_mesh(rec: &rerun::RecordingStream, args: &Args) -> anyhow::Result<()> {
 
         if let Some(diffuse) = &mat.color.diffuse {
             mesh3d = mesh3d.with_albedo_factor(Rgba32::from_unmultiplied_rgba(
-                diffuse[0] as u8,
-                diffuse[1] as u8,
-                diffuse[2] as u8,
-                diffuse[3] as u8,
+                (diffuse[0] * 255.0) as u8,
+                (diffuse[1] * 255.0) as u8,
+                (diffuse[2] * 255.0) as u8,
+                (diffuse[3] * 255.0) as u8,
             ));
         }
 
