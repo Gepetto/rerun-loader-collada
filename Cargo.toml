@@ -10,7 +10,7 @@ repository = "https://github.com/gepetto/rerun-loader-collada"
 anyhow = "1.0.95"
 argh = "0.1.13"
 mesh-loader = "0.1.13"
-rerun = "0.20.3"
+rerun = "0.21.0"
 
 [package.metadata.release]
 pre-release-replacements = [
